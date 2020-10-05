@@ -14,7 +14,7 @@ func main() {
 	subID := os.Args[1]
 	invoiceName := os.Args[2]
 
-	getStatements(context.Context, subID, invoiceName)
+	getStatements(subID, invoiceName)
 }
 
 func azureAuth() autorest.Authorizer {
@@ -27,7 +27,9 @@ func azureAuth() autorest.Authorizer {
 	return auth
 }
 
-func getStatements(ctx context.Context, subID string, invoiceName string) {
+func getStatements(subID string, invoiceName string) {
 	invoice := billing.NewInvoicesClient(subID, subID)
-	invoice.DownloadBillingSubscriptionInvoice(context.Context, invoiceName, "test")
+
+	// IN PROGRESS
+	invoice.DownloadBillingSubscriptionInvoice(context.TODO(), invoiceName, "test")
 }
