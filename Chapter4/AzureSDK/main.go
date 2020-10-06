@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 
@@ -14,7 +15,7 @@ func main() {
 	subID := os.Args[1]
 	invoiceName := os.Args[2]
 
-	getStatements(subID, invoiceName)
+	getInvoiceDate(subID, invoiceName)
 }
 
 func azureAuth() autorest.Authorizer {
@@ -27,9 +28,28 @@ func azureAuth() autorest.Authorizer {
 	return auth
 }
 
-func getStatements(subID string, invoiceName string) {
-	invoice := billing.NewInvoicesClient(subID, subID)
+func getInvoiceDate(subID string, invoiceName string) {
+	if subID == "" {
+		log.Println("Please add in a subscription ID")
+	}
 
-	// IN PROGRESS
-	invoice.DownloadBillingSubscriptionInvoice(context.TODO(), invoiceName, "test")
+	if invoiceName == "" {
+		log.Println("Please add in an invoice name")
+	}
+
+	invoiceClient := billing.NewInvoicesClient(subID, subID)
+
+	if azureAuth() == nil {
+		log.Panicln("No Azure CLI auth detected!")
+	}
+
+	invoiceClient.Authorizer = azureAuth()
+
+	getByID, err := invoiceClient.GetByID(context.Background(), invoiceName)
+
+	if err != nil {
+		log.Println(err)
+	} else {
+		fmt.Println(*getByID.InvoiceDate)
+	}
 }
