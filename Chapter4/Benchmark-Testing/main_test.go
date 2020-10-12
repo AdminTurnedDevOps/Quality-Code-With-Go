@@ -10,9 +10,6 @@ func BenchmarkAddition(b *testing.B) {
 		log.Println("The testing package contains no values")
 	}
 
-	got := addition(4)
+	addition(4)
 
-	if got != 4 {
-		b.Error("Did not equal 4")
-	}
 }
