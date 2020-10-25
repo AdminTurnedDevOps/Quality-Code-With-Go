@@ -10,7 +10,7 @@ func TestAddition(t *testing.T) {
 		log.Println("The testing package contains no values")
 	}
 
-	got := addition(2)
+	got := addition(4)
 
 	if got != 4 {
 		t.Error("Did not equal 4")
