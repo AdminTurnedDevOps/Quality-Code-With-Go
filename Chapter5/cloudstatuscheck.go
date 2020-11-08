@@ -19,9 +19,8 @@ func main() {
 	}
 }
 
-func azureStatus() {
+func azureStatus() string {
 	response, err := http.Get("https://status.azure.com")
-	defer response.Body.Close()
 
 	if err != nil {
 		log.Println(err)
@@ -33,6 +32,9 @@ func azureStatus() {
 		log.Println(err)
 		os.Exit(1)
 	}
+
+	defer response.Body.Close()
+
 	output := string(body)
 
 	if !strings.Contains(output, "data-label=\"Good\"") {
@@ -41,4 +43,6 @@ func azureStatus() {
 	} else {
 		log.Println("All Azure Services Are Operational")
 	}
+
+	return ""
 }
