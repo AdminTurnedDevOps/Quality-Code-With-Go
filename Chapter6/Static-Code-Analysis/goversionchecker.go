@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -20,5 +21,6 @@ func isVersion() *exec.Cmd {
 		log.Fatal(err1)
 	}
 
+	fmt.Println(version)
 	return version
 }
