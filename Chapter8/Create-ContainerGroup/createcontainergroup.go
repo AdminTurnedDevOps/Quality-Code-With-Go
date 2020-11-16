@@ -38,7 +38,8 @@ func createContainerGroup(subscriptionID, resourceGroupName, name, location stri
 	containerGroup.Authorizer = azureAuth()
 	create, err := containerGroup.CreateOrUpdate(context.Background(), resourceGroupName, name, containerinstance.ContainerGroup{
 		Name:     &name,
-		Location: &location, ContainerGroupProperties: &containerinstance.ContainerGroupProperties{
+		Location: &location,
+		ContainerGroupProperties: &containerinstance.ContainerGroupProperties{
 			IPAddress: &containerinstance.IPAddress{
 				Type: containerinstance.Public,
 				Ports: &[]containerinstance.Port{
@@ -78,6 +79,5 @@ func createContainerGroup(subscriptionID, resourceGroupName, name, location stri
 	if err != nil {
 		log.Println(err)
 	}
-
 	return create
 }
