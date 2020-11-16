@@ -16,8 +16,9 @@ func main() {
 	subscriptionID := os.Args[1]
 	resourceGroupName := os.Args[2]
 	name := os.Args[3]
+	location := os.Args[3]
 
-	createContainerGroup(subscriptionID, resourceGroupName, name)
+	createContainerGroup(subscriptionID, resourceGroupName, name, location)
 
 }
 
@@ -31,9 +32,7 @@ func azureAuth() autorest.Authorizer {
 	return auth
 }
 
-func createContainerGroup(subscriptionID, resourceGroupName, name string) containerinstance.ContainerGroupsCreateOrUpdateFuture {
-	var location string = "eastus"
-
+func createContainerGroup(subscriptionID, resourceGroupName, name, location string) containerinstance.ContainerGroupsCreateOrUpdateFuture {
 	containerGroup := containerinstance.NewContainerGroupsClient(subscriptionID)
 
 	containerGroup.Authorizer = azureAuth()
